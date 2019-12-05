@@ -2,10 +2,18 @@
 #include <LuaClient.h>
 #include "Logger.h"
 
-int Init(lua_State* L)
+int SDLInit(lua_State* L)
 {
 	Uint32 flag = (Uint32)lua_tointeger(L, 1);
-	lua_pushboolean(L, Renderer::Init(flag));
+	lua_pushboolean(L, Renderer::SDLInit(flag));
+
+	return 1;
+}
+
+int SDLImageInit(lua_State* L)
+{
+	Uint32 flag = (Uint32)lua_tointeger(L, 1);
+	lua_pushboolean(L, Renderer::SDLImageInit(flag));
 
 	return 1;
 }
@@ -54,6 +62,80 @@ int Quit(lua_State* L)
 	Renderer::Quit();
 
 	return 0;
+}
+
+int GetError(lua_State* L)
+{
+	auto ss = Renderer::GetError();
+	lua_pushstring(L, Renderer::GetError());
+
+	return 1;
+}
+
+int PollEvent(lua_State* L)
+{
+	SDL_Event event;
+	bool bResult = 1 == SDL_PollEvent(&event);
+	long type = -1;
+	if (bResult)
+		type = event.type;
+
+	lua_pushboolean(L, bResult);
+	lua_pushnumber(L, type);
+
+	return 2;
+}
+
+int GetTicks(lua_State* L)
+{
+	lua_pushnumber(L, Renderer::GetTicks());
+
+	return 1;
+}
+
+int TICKS_PASSED(lua_State* L)
+{
+	Uint32 currentTime = (Uint32)lua_tonumber(L, 1);
+	Uint32 targetTime = (Uint32)lua_tonumber(L, 2);
+	lua_pushboolean(L, Renderer::TICKS_PASSED(currentTime, targetTime));
+
+	return 1;
+}
+
+int SetRenderDrawColor(lua_State* L)
+{
+	SDL_Renderer* pRenderer = (SDL_Renderer*)lua_touserdata(L, 1);
+	Uint8 r = (Uint8)lua_tonumber(L, 2);
+	Uint8 g = (Uint8)lua_tonumber(L, 3);
+	Uint8 b = (Uint8)lua_tonumber(L, 4);
+	Uint8 a = (Uint8)lua_tonumber(L, 5);
+	Renderer::SetRenderDrawColor(pRenderer, r, g, b, a);
+
+	return 0;
+}
+
+int RenderClear(lua_State* L)
+{
+	SDL_Renderer* pRenderer = (SDL_Renderer*)lua_touserdata(L, 1);
+	Renderer::RenderClear(pRenderer);
+
+	return 0;
+}
+
+int RenderPresent(lua_State* L)
+{
+	SDL_Renderer* pRenderer = (SDL_Renderer*)lua_touserdata(L, 1);
+	Renderer::RenderPresent(pRenderer);
+
+	return 0;
+}
+
+int GetKeyboardState(lua_State* L)
+{
+	int keycode = (int)lua_tonumber(L, 1);
+	lua_pushboolean(L, Renderer::GetKeyboardState(keycode));
+
+	return 1;
 }
 
 int RendererGet(lua_State* L)
@@ -112,8 +194,12 @@ void LuaWrap::RegisterRenderer(lua_State* L)
 	lua_pushcfunction(L, RendererSet);
 	lua_rawset(L, -3);
 
-	lua_pushstring(L, "Init");
-	lua_pushcfunction(L, Init);
+	lua_pushstring(L, "SDLInit");
+	lua_pushcfunction(L, SDLInit);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "SDLImageInit");
+	lua_pushcfunction(L, SDLImageInit);
 	lua_rawset(L, -3);
 
 	lua_pushstring(L, "CreateWindow");
@@ -123,7 +209,7 @@ void LuaWrap::RegisterRenderer(lua_State* L)
 	lua_pushstring(L, "CreateRenderer");
 	lua_pushcfunction(L, CreateRenderer);
 	lua_rawset(L, -3);
-
+	
 	lua_pushstring(L, "DestroyWindow");
 	lua_pushcfunction(L, DestroyWindow);
 	lua_rawset(L, -3);
@@ -134,6 +220,38 @@ void LuaWrap::RegisterRenderer(lua_State* L)
 
 	lua_pushstring(L, "Quit");
 	lua_pushcfunction(L, Quit);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "GetError");
+	lua_pushcfunction(L, GetError);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "PollEvent");
+	lua_pushcfunction(L, PollEvent);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "SetRenderDrawColor");
+	lua_pushcfunction(L, SetRenderDrawColor);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "RenderClear");
+	lua_pushcfunction(L, RenderClear);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "RenderPresent");
+	lua_pushcfunction(L, RenderPresent);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "GetTicks");
+	lua_pushcfunction(L, GetTicks);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "TICKS_PASSED");
+	lua_pushcfunction(L, TICKS_PASSED);
+	lua_rawset(L, -3);
+
+	lua_pushstring(L, "GetKeyboardState");
+	lua_pushcfunction(L, GetKeyboardState);
 	lua_rawset(L, -3);
 
 	lua_setmetatable(L, -2);

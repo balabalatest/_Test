@@ -36,6 +36,15 @@
     <ClCompile Include="Source\Wrap\LoggerWrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrap\TextureWrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wrap\LuaClientWrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\LuaClient.h">
@@ -47,12 +56,25 @@
     <ClInclude Include="Include\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Script\Game.lua" />
     <Text Include="Script\Logger.lua" />
+    <Text Include="Script\Module\Enum\SDL.lua" />
+    <Text Include="Script\GameBase.lua" />
+    <Text Include="Script\RyuujinnGame.lua" />
+    <Text Include="Script\Entity\Actor.lua" />
+    <Text Include="Script\Module\Component\SpriteComponent.lua" />
+    <Text Include="Script\Module\Enum\ActorState.lua" />
+    <Text Include="Script\Manager\TextureManager.lua" />
+    <Text Include="Script\Entity\Player.lua" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Script\Main.lua" />
+    <None Include="Config\Window.ini" />
+    <None Include="Script\Module\Component\Component.lua" />
+    <None Include="Script\Entity\BG.lua" />
   </ItemGroup>
 </Project>

@@ -76,3 +76,8 @@ private:
 private:
 	lua_State* m_pLuaState;
 };
+
+namespace LuaWrap
+{
+	void RegisterLuaClient(lua_State* L);
+}

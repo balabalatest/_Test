@@ -29,16 +29,12 @@ void LuaClient::Start(const char* strStartLuaFile, const char* strEntryFunction)
 	BindCppToLua();
 
 	// 将全局表压入栈中
-	//lua_getglobal(m_pLuaState, "_G");
-	//DumpStack(true);
 	int result = luaL_dofile(m_pLuaState, strStartLuaFile);
 	if (LUA_OK != result)
 	{
 		Logger::LogError("Error: %s", lua_tostring(m_pLuaState, -1));
 		return;
 	}
-	//DumpStack(true);
-	//lua_pop(m_pLuaState, 1);
 
 	lua_getglobal(m_pLuaState, strEntryFunction);
 

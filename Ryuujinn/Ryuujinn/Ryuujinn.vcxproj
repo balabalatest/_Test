@@ -167,20 +167,34 @@ XCOPY "$(SDL_Image_LibraryPath)\x64\*.dll" "$(TargetDir)" /D /K /Y</Command>
     <ClCompile Include="Source\LuaClinetBind.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
+    <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Wrap\LoggerWrap.cpp" />
+    <ClCompile Include="Source\Wrap\LuaClientWrap.cpp" />
     <ClCompile Include="Source\Wrap\RendererWrap.cpp" />
+    <ClCompile Include="Source\Wrap\TextureWrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Logger.h" />
     <ClInclude Include="Include\LuaClient.h" />
     <ClInclude Include="Include\Renderer.h" />
+    <ClInclude Include="Include\Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Config\Window.ini" />
+    <None Include="Script\Entity\BG.lua" />
+    <None Include="Script\Module\Component\Component.lua" />
     <None Include="Script\Main.lua" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Script\Game.lua" />
+    <Text Include="Script\Entity\Player.lua" />
+    <Text Include="Script\Manager\TextureManager.lua" />
+    <Text Include="Script\Module\Component\SpriteComponent.lua" />
+    <Text Include="Script\Entity\Actor.lua" />
+    <Text Include="Script\GameBase.lua" />
     <Text Include="Script\Logger.lua" />
+    <Text Include="Script\Module\Enum\ActorState.lua" />
+    <Text Include="Script\Module\Enum\SDL.lua" />
+    <Text Include="Script\RyuujinnGame.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

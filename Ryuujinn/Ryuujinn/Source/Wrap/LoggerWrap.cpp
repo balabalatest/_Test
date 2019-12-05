@@ -1,6 +1,5 @@
 #include "Logger.h"
 #include "LuaClient.h"
-#include <iostream>
 
 int SwtichColorToRed(lua_State* L)
 {

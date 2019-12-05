@@ -40,6 +40,8 @@ function SpriteComponent:OnRelease()
 	if self:GetActor() and self:GetActor():GetGame() then
 		self:GetActor():GetGame():RemoveSpriteComponent(self)
 	end
+	TextureManager:RemoveTexture(self.m_pTexture)
+	self.m_pTexture = nil
 end
 
 return SpriteComponent

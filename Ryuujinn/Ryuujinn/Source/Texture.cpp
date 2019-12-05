@@ -5,6 +5,7 @@
 
 Texture::Texture()
 {
+	m_fileName = "";
 	m_pSDLTexture = nullptr;
 	m_textureWidth = 0;
 	m_textureHeight = 0;
@@ -12,6 +13,7 @@ Texture::Texture()
 
 Texture::Texture(SDL_Renderer* pRenderer, const char* fileName)
 {
+	m_fileName = fileName;
 	SDL_Surface* pSurface = IMG_Load(fileName);
 	if (!pSurface)
 	{
@@ -37,6 +39,7 @@ Texture::~Texture()
 		SDL_DestroyTexture(m_pSDLTexture);
 		m_pSDLTexture = nullptr;
 	}
+	Logger::Log("Call Texture' destructor, m_fileName: %s", m_fileName);
 }
 
 void Texture::Render(SDL_Renderer* pRenderer, int x, int y)

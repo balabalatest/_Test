@@ -17,7 +17,7 @@ end
 function TextureManager:RemoveTexture(pTexture)
 	for k, v in pairs(self.m_pTextures) do
 		if v == pTexture then
-			self.m_pTextures[textureName] = nil
+			self.m_pTextures[k] = nil
 		end
 	end
 end

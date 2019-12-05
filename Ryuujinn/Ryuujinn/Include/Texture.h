@@ -28,6 +28,7 @@ private:
 	void QueryTexture();
 
 private:
+	const char* m_fileName;
 	struct SDL_Texture* m_pSDLTexture = nullptr;
 	int m_textureWidth = 0;
 	int m_textureHeight = 0;

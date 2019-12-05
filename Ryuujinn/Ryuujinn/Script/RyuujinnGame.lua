@@ -23,10 +23,12 @@ setmetatable(RyuujinnGame,
 })
 
 function RyuujinnGame:OnInit()
+	--添加背景
 	require("Entity.BG"):New(self, "Resource/img/board/10.png", 0, 0)
 	require("Entity.BG"):New(self, "Resource/img/board/11.png", 0, 16)
 	require("Entity.BG"):New(self, "Resource/img/board/12.png", 0, 464)
 	require("Entity.BG"):New(self, "Resource/img/board/20.png", 416, 0)
+	--添加玩家
 	self.m_pPlayer = require("Entity.Player"):New(self)
 	return true
 end
@@ -44,9 +46,18 @@ function RyuujinnGame:OnHandleInput()
 	if self.m_pPlayer and self.m_pPlayer.HandleInput then
 		self.m_pPlayer:HandleInput()
 	end
+
+	--测试是否有调用GC，释放C++ Texture资源
+	if Renderer.GetKeyboardState(SDL_KEYCODE.SDL_SCANCODE_F) then
+		if self.m_pPlayer then
+			self.m_pPlayer:Release()
+			--self.m_pPlayer = nil
+		end
+	end
 end
 
 function RyuujinnGame:OnUpdate(deltaTime)
+	collectgarbage("collect")
 	self:UpdateActor(deltaTime)
 end
 

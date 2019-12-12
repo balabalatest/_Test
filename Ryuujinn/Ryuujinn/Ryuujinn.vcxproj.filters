@@ -76,5 +76,6 @@
     <None Include="Config\Window.ini" />
     <None Include="Script\Module\Component\Component.lua" />
     <None Include="Script\Entity\BG.lua" />
+    <None Include="Script\Config\TB_Window.lua" />
   </ItemGroup>
 </Project>

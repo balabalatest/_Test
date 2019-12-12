@@ -8,6 +8,9 @@ setmetatable(SpriteComponent, require "Module.Component.Component")
 
 function SpriteComponent:OnInit(renderOrder)
 	self.m_renderOrder = renderOrder
+	--将该组件对象传入到RyuujinnGame中的m_pSpriteComponents列表中
+	--由RyuujinnGame来管理该组件的渲染等
+	--因此RyuujinnGame可以根据渲染顺序（m_renderOrder）来控制那个先渲染
 	if self:GetActor() and self:GetActor():GetGame() then
 		self:GetActor():GetGame():AddSpriteComponent(self)
 	end
@@ -23,6 +26,7 @@ function SpriteComponent:Render(pSDLRenderer)
 	local pActor = self:GetActor()
 	if nil == pActor then return end
 
+	--获取Actor的位置和缩放来渲染图片
 	local x, y = pActor:GetPosition()
 	local width, height = pActor:GetScale()
 	if (1 == width and 1 == height) or (nil == width and nil == height) then

@@ -8,6 +8,7 @@ local Actor =
 }
 Actor.__index = Actor
 
+--构造函数
 function Actor:New(game, ...)
 	local newTable = 
 	{
@@ -18,6 +19,8 @@ function Actor:New(game, ...)
 	setmetatable(newTable, self)
 	self.__index = self
 	newTable.m_game = game
+	--将该Actor对象传入到RyuujinnGame中的m_pActors或者m_pPendingActors列表中
+	--由RyuujinnGame来管理该Actor对象的更新释放等
 	if newTable:GetGame() then
 		newTable:GetGame():AddActor(newTable)
 	end
@@ -93,6 +96,7 @@ function Actor:UpdateComponent(deltaTime)
 	end
 end
 
+--子类通过实现OnUpdate来完成多态
 function Actor:Update(deltaTime)
 	if ActorState.Active == self.m_actorState then
 		self:UpdateComponent()
@@ -108,6 +112,7 @@ function Actor:Release()
 	end
 	for i = #self.m_components, 1, -1 do
 		self.m_components[i]:Release()
+		self.m_components[i] = nil
 	end
 	if self.OnRelease then
 		self:OnRelease()

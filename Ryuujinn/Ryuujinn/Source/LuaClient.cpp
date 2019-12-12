@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include "Logger.h"
 
-LuaClient* LuaClient::m_instance = new LuaClient();
+LuaClient* LuaClient::m_pInstance = new LuaClient();
 LuaClient::Garbage LuaClient::m_garbage;
 
 LuaClient::LuaClient()
@@ -28,7 +28,6 @@ void LuaClient::Start(const char* strStartLuaFile, const char* strEntryFunction)
 
 	BindCppToLua();
 
-	// 将全局表压入栈中
 	int result = luaL_dofile(m_pLuaState, strStartLuaFile);
 	if (LUA_OK != result)
 	{

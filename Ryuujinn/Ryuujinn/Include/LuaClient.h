@@ -15,7 +15,7 @@ class LuaClient
 {
 #pragma region Singleton 单例，利用Garbage类来释放内存
 public:
-	static LuaClient* GetInstance() { return m_instance; }
+	static LuaClient* GetInstance() { return m_pInstance; }
 
 private:
 	class Garbage
@@ -23,14 +23,14 @@ private:
 	public:
 		~Garbage()
 		{
-			if (m_instance)
-				delete m_instance;
-			m_instance = nullptr;
+			if (m_pInstance)
+				delete m_pInstance;
+			m_pInstance = nullptr;
 		}
 	};
 
 private:
-	static LuaClient* m_instance;
+	static LuaClient* m_pInstance;
 	static Garbage m_garbage;
 #pragma endregion
 

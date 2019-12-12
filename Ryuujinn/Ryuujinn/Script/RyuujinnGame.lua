@@ -51,7 +51,7 @@ function RyuujinnGame:OnHandleInput()
 	if Renderer.GetKeyboardState(SDL_KEYCODE.SDL_SCANCODE_F) then
 		if self.m_pPlayer then
 			self.m_pPlayer:Release()
-			--self.m_pPlayer = nil
+			self.m_pPlayer = nil
 		end
 	end
 end

@@ -26,25 +26,40 @@ function GameBase:Init()
 		return false
 	end
 
-	--读取Window.ini配置
-	local filePath = "Config/Window.ini"
-	local windowConfig = io.open(filePath, "r")
-	if not windowConfig then
-		Logger.LogError("Error: Can't find %s", filePath)
+	--1.读取Window.ini配置
+	--local filePath = "Config/Window.ini"
+	--local windowConfig = io.open(filePath, "r")
+	--if not windowConfig then
+	--	Logger.LogError("Error: Can't find %s", filePath)
+	--	return false
+	--end
+	--self.m_title = windowConfig:read()
+	--self.m_width = tonumber(windowConfig:read())
+	--self.m_height = tonumber(windowConfig:read())
+	--self.m_bFullscreen = tonumber(windowConfig:read()) ~= 0
+	--windowConfig:close()
+	--local pos_x = 100
+	--local pos_y = 100
+
+	--2.读取TB_Window配置
+	local tb_window = require "Config.TB_Window"
+	if not tb_window then
+		Logger.LogError("Error: Don't find the table Config.TB_Window")
 		return false
 	end
-	self.m_title = windowConfig:read()
-	self.m_width = tonumber(windowConfig:read())
-	self.m_height = tonumber(windowConfig:read())
-	self.m_bFullscreen = tonumber(windowConfig:read()) ~= 0
-	windowConfig:close()
+	self.m_title = tb_window["1"].title
+	local pos_x = tb_window["1"].x
+	local pos_y = tb_window["1"].y
+	self.m_width = tb_window["1"].width
+	self.m_height = tb_window["1"].height
+	self.m_bFullscreen = tb_window["1"].fullscreen ~= 0
 
-	--根据Window.ini配置创建SDL窗口
+	--根据Window.ini配置或者TB_Window配置创建SDL窗口
 	flags = 0
 	if self.m_bFullscreen then
 		flags = flags | SDL_WINDOW_TYPE.SDL_WINDOW_FULLSCREEN
 	end
-	self.m_pSDLWindow = Renderer.CreateWindow(self.m_title, 100, 100, self.m_width, self.m_height, flags)
+	self.m_pSDLWindow = Renderer.CreateWindow(self.m_title, pos_x, pos_y, self.m_width, self.m_height, flags)
 
 	--创建SDLRenderer
 	flags = SDL_RENDERER_TYPE.SDL_RENDERER_ACCELERATED | SDL_RENDERER_TYPE.SDL_RENDERER_PRESENTVSYNC

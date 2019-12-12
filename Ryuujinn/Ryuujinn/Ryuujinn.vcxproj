@@ -181,6 +181,7 @@ XCOPY "$(SDL_Image_LibraryPath)\x64\*.dll" "$(TargetDir)" /D /K /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\Window.ini" />
+    <None Include="Script\Config\TB_Window.lua" />
     <None Include="Script\Entity\BG.lua" />
     <None Include="Script\Module\Component\Component.lua" />
     <None Include="Script\Main.lua" />
